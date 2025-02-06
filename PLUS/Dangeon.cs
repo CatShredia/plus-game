@@ -119,7 +119,11 @@ namespace PLUS_game
         {
             WriteLine("Для продолжения, введите любой символ (открытие инвентаря - e)");
 
-            string active = ReadLine();
+            string active = ReadLine().ToLower();
+
+            if(active[0] == 'e') {
+                Game.player.OpenInventory();
+            }
         }
 
         public void StartRoom()

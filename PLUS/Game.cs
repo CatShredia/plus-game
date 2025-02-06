@@ -4,11 +4,14 @@ namespace PLUS_game
     {
         public static bool isGame = false;
 
+        public static Player player;
+        public static Dangeon dangeon;
+
         public Game()
         {
             isGame = true;
-            Dangeon dangeon = new Dangeon();
-            Player player = new Player(100 * CoefOfGame);
+            dangeon = new Dangeon();
+            player = new Player(100 * CoefOfGame);
 
             dangeon.GenerateLevel();
 
