@@ -153,6 +153,26 @@ namespace PLUS_game
         public void StartRoom()
         {
             WriteLine("Стартовая комната!");
+            WriteLine("Выберите 2 оружия, введя по очереди их порядковые номера: ");
+
+            for (int i = 0; i < Game.weaponsCollection.Count; i++)
+            {
+                WriteLine($"{i + 1}: {Game.weaponsCollection[i].Name} наносит {Game.weaponsCollection[i].Damage} урона");
+            }
+
+            int number;
+            for (int i = 0; i < 2; i++)
+            {
+                number = Convert.ToInt32(ReadLine()) - 1;
+
+                if (number >= 0 && number < Game.weaponsCollection.Count)
+                {
+                    Game.player.weapons.Add(Game.weaponsCollection[number]);
+                } else{
+                    PrintError("Такого оружия нет");
+                    i--;
+                }
+            }
 
             Activity();
 

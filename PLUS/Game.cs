@@ -7,12 +7,21 @@ namespace PLUS_game
         public static Player player;
         public static Dangeon dangeon;
 
+        public static List<Weapon> weaponsCollection;
+
         public Game()
         {
             isGame = true;
             dangeon = new Dangeon();
             player = new Player(100 * CoefOfGame);
 
+            weaponsCollection = [
+                new Weapon("Меч", 10),
+                new Weapon("Лук", 20),
+                new Weapon("Арбалет", 40),
+                new Weapon("Автомат", 100),
+            ];
+            // -----
             dangeon.GenerateLevel();
 
             while (isGame == true)

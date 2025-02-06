@@ -14,6 +14,8 @@ namespace PLUS_game
 
         public Item[] Inventory;
 
+        public List<Weapon> weapons;
+
         public Player(int hp)
         {
             HP = hp;
@@ -25,6 +27,8 @@ namespace PLUS_game
             Location[1] = 0;
 
             Inventory = new Item[5];
+
+            weapons = new List<Weapon>();
 
             // добавление изначальных предметов
             for (int i = 0; i < Inventory.Length; i++)
@@ -59,28 +63,48 @@ namespace PLUS_game
         }
         public void OpenInventory()
         {
-            WriteLine("Выберите предмет(введите порядковый номер):");
+            PrintWeapons();
+
+
+            WriteLine("---Предметы---");
+            WriteLine("Выберите предмет(введите порядковый номер, для выхода - 0):");
+
 
             for (int i = 0; i < Inventory.Length; i++)
             {
-                WriteLine($"{i + 1}: {Inventory[i].Name} ");
+                WriteLine($"{i + 1}: {Inventory[i].Name} восстановит: {Inventory[i].Effect}HP ");
             }
 
             int number = Convert.ToInt32(ReadLine()) - 1;
 
-            if (HP < maxHP)
+            if (number != -1)
             {
-                if (HP + Inventory[number].Effect >= maxHP)
+                if (HP < maxHP)
                 {
-                    HP = maxHP;
+                    if (HP + Inventory[number].Effect >= maxHP)
+                    {
+                        HP = maxHP;
+                    }
+                    else
+                    {
+                        HP += Inventory[number].Effect;
+                    }
+                    Inventory[number] = new Item("Пустой карман", "ну, воздух на самом деле", 0);
                 }
                 else
                 {
-                    HP += Inventory[number].Effect;
+                    WriteLine("Крайне расточительно использовать сейчас лекарство!");
                 }
-                Inventory[number] = new Item("Пустой карман", "ну, воздух на самом деле", 0);
-            } else {
-                WriteLine("Крайне расточительно использовать сейчас лекарство!");
+            } 
+        }
+
+        public void PrintWeapons()
+        {
+            WriteLine("---Оружие---");
+
+            for (int i = 0; i < weapons.Count; i++)
+            {
+                WriteLine($"{i + 1}: {weapons[i].Name} : {weapons[i].Damage} урона");
             }
         }
     }
