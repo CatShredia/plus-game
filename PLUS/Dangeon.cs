@@ -31,6 +31,8 @@ namespace PLUS_game
                 }
             }
 
+            Level[0, 0] = $"[/]";
+
             Level[CoefOfGame * 2 - 1, CoefOfGame * 2 - 1] = $"[B]";
         }
         public char GetTypeOfRoom()
@@ -80,8 +82,9 @@ namespace PLUS_game
         {
             Level[player.Location[0], player.Location[1]] = "[/]";
 
-            if(!((player.Location[0] == 0) && (player.Location[1] == 0))) {
-                Level[player.LastLocation[0],player.LastLocation[1]] = $"[.]";
+            if (!((player.Location[0] == 0) && (player.Location[1] == 0)))
+            {
+                Level[player.LastLocation[0], player.LastLocation[1]] = $"[.]";
             }
         }
 
@@ -117,12 +120,33 @@ namespace PLUS_game
 
         public void Activity()
         {
-            WriteLine("Для продолжения, введите любой символ (открытие инвентаря - e)");
+            string active;
 
-            string active = ReadLine().ToLower();
+            bool isInventory = true;
 
-            if(active[0] == 'e') {
-                Game.player.OpenInventory();
+            while (isInventory)
+            {
+                WriteLine("(0 / другие символы - продолжить) (e - открытие инвентаря)");
+                WriteLine($"У вас: {Game.player.HP}HP");
+
+                active = ReadLine().ToLower();
+
+                if (active != "")
+                {
+                    switch (active[0])
+                    {
+                        case '0':
+                            isInventory = false;
+                            break;
+                        case 'e':
+                            Game.player.OpenInventory();
+                            continue;
+                        default:
+                            isInventory = false;
+                            break;
+                    }
+                }
+
             }
         }
 
@@ -131,28 +155,28 @@ namespace PLUS_game
             WriteLine("Стартовая комната!");
 
             Activity();
-             
+
         }
         public void EnemyRoom()
         {
             WriteLine("Вы наткнулись на монстра");
 
             Activity();
-             
+
         }
         public void ChestRoom()
         {
             WriteLine("Сундук начинает разговор");
 
             Activity();
-             
+
         }
         public void TrapRoom()
         {
             WriteLine("О нет, ловушка...");
 
             Activity();
-             
+
         }
         public void StoreRoom()
         {
@@ -160,7 +184,7 @@ namespace PLUS_game
             WriteLine("\'Не хотите ли вы что-нибудь прикупить?\'");
 
             Activity();
-             
+
         }
         public void BossRoom()
         {
@@ -169,7 +193,7 @@ namespace PLUS_game
             Game.isGame = false;
 
             Activity();
-             
+
         }
     }
 }

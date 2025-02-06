@@ -10,7 +10,7 @@ namespace PLUS_game
         public static ConsoleColor defaultForeground = ConsoleColor.Gray;
         public static ConsoleColor defaultBackground = ConsoleColor.Black;
 
-        public static int HP;
+        public int HP;
 
         public static void PrintError(string err)
         {

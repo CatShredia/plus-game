@@ -5,6 +5,7 @@ namespace PLUS_game
 
     class Player : Object
     {
+        public int maxHP = 100;
 
         public int[] Location;
         public int[] LastLocation;
@@ -26,8 +27,16 @@ namespace PLUS_game
             Inventory = new Item[5];
 
             // добавление изначальных предметов
-            for(int i = 0; i < 3;i++) {
-                Inventory[i] = new Item("Зелье", "чудотворное", 20);
+            for (int i = 0; i < Inventory.Length; i++)
+            {
+                if (i < 3)
+                {
+                    Inventory[i] = new Item("Зелье", "чудотворное", 20);
+                }
+                else
+                {
+                    Inventory[i] = new Item("Пустой карман", "ну, воздух на самом деле", 0);
+                }
             }
         }
 
@@ -50,15 +59,28 @@ namespace PLUS_game
         }
         public void OpenInventory()
         {
-            WriteLine("Выберите предмет:");
+            WriteLine("Выберите предмет(введите порядковый номер):");
 
             for (int i = 0; i < Inventory.Length; i++)
             {
-                if(Inventory[i] != null){
-                    WriteLine($"{i + 1}: {Inventory[i].Name} ");
-                } else {
-                    WriteLine($"{i + 1}: Пустой карман.. ");
+                WriteLine($"{i + 1}: {Inventory[i].Name} ");
+            }
+
+            int number = Convert.ToInt32(ReadLine()) - 1;
+
+            if (HP < maxHP)
+            {
+                if (HP + Inventory[number].Effect >= maxHP)
+                {
+                    HP = maxHP;
                 }
+                else
+                {
+                    HP += Inventory[number].Effect;
+                }
+                Inventory[number] = new Item("Пустой карман", "ну, воздух на самом деле", 0);
+            } else {
+                WriteLine("Крайне расточительно использовать сейчас лекарство!");
             }
         }
     }
