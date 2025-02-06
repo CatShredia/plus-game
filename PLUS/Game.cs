@@ -1,5 +1,8 @@
 namespace PLUS_game
 {
+
+    using static System.Console;
+
     class Game : Object
     {
         public static bool isGame = false;
@@ -20,6 +23,7 @@ namespace PLUS_game
                 new Weapon("Лук", 20),
                 new Weapon("Арбалет", 40),
                 new Weapon("Автомат", 100),
+                new Weapon("Заточка", 1),
             ];
             // -----
             dangeon.GenerateLevel();
@@ -34,6 +38,32 @@ namespace PLUS_game
                 dangeon.Action(player.Room);
 
                 player.Move();
+            }
+        }
+
+        public static void MonsterFight(Monster monster)
+        {
+            bool isFight = true;
+            while (isFight)
+            {
+                WriteLine($"У вас {player.HP}HP");
+                WriteLine($"У противника {monster.HP}HP");
+
+                monster.HP -= player.Attack(); // удар игрока
+
+                if (monster.isNullHP())
+                {
+                    isFight = false;
+                }
+                else
+                {
+                    player.HP -= monster.Attack(); // удар монстра
+                }
+                if(player.isNullHP()) {
+                    isFight = false;
+                    isGame = false;
+                }
+                
             }
         }
     }

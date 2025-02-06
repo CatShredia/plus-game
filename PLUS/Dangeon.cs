@@ -181,6 +181,10 @@ namespace PLUS_game
         {
             WriteLine("Вы наткнулись на монстра");
 
+            Monster monster = new Monster("Монстр");
+
+            Game.MonsterFight(monster);
+
             Activity();
 
         }
@@ -209,6 +213,10 @@ namespace PLUS_game
         public void BossRoom()
         {
             WriteLine("Чудовище преграждает вам дорогу");
+
+            Monster monster = new Monster("BOSS");
+
+            Game.MonsterFight(monster);
 
             Game.isGame = false;
 

@@ -95,7 +95,7 @@ namespace PLUS_game
                 {
                     WriteLine("Крайне расточительно использовать сейчас лекарство!");
                 }
-            } 
+            }
         }
 
         public void PrintWeapons()
@@ -105,6 +105,36 @@ namespace PLUS_game
             for (int i = 0; i < weapons.Count; i++)
             {
                 WriteLine($"{i + 1}: {weapons[i].Name} : {weapons[i].Damage} урона");
+            }
+        }
+
+        public int Attack()
+        {
+            PrintWeapons();
+            WriteLine("Скорее выбирай, чем ударишь!");
+
+            int number = Convert.ToInt32(ReadLine()) - 1;
+
+            if (number >= 0 && number < weapons.Count)
+            {
+                return weapons[number].Damage;
+            }
+            else
+            {
+                WriteLine("Долго думаешь.");
+                return 0;
+            }
+        }
+
+        public bool isNullHP()
+        {
+            if (HP < 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
