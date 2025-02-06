@@ -98,6 +98,19 @@ namespace PLUS_game
             }
         }
 
+        public int CheckPlaceToItem()
+        {
+            for (int i = 0; i < Inventory.Length; i++)
+            {
+                if (Inventory[i].Name == "Пустой карман")
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
         public void PrintWeapons()
         {
             WriteLine("---Оружие---");

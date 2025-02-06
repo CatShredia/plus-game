@@ -168,7 +168,9 @@ namespace PLUS_game
                 if (number >= 0 && number < Game.weaponsCollection.Count)
                 {
                     Game.player.weapons.Add(Game.weaponsCollection[number]);
-                } else{
+                }
+                else
+                {
                     PrintError("Такого оружия нет");
                     i--;
                 }
@@ -192,22 +194,47 @@ namespace PLUS_game
         {
             WriteLine("Сундук начинает разговор");
 
+            Chest chest = new Chest();
+
             Activity();
 
         }
         public void TrapRoom()
         {
+            Random random = new Random();
+
+            int number = random.Next(10, 40);
+
             WriteLine("О нет, ловушка...");
+            WriteLine($"Вы поранились на {number}HP");
+
+            Game.player.HP -= number;
 
             Activity();
 
         }
         public void StoreRoom()
         {
-            WriteLine("Усатый торговец медленно подползает к вам,");
-            WriteLine("\'Не хотите ли вы что-нибудь прикупить?\'");
+            WriteLine("Усатый торговец медленно подползает к вам, возможно пора освободить место");
 
             Activity();
+
+            int number = Game.player.CheckPlaceToItem();
+            if (number != -1)
+            {
+                WriteLine("\'Не хотите ли вы купить зелье? (yes/no)\'");
+
+                string str = ReadLine();
+
+                if (str.Equals("yes"))
+                {
+                    Game.player.Inventory[number] = new Item("Зелье от шапки", "зелье от торговца", 15);
+                }
+            } else {
+                WriteLine("И так места нет, пойду дальше");
+            }
+
+
 
         }
         public void BossRoom()

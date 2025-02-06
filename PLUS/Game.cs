@@ -28,6 +28,9 @@ namespace PLUS_game
             // -----
             dangeon.GenerateLevel();
 
+            // TODO: не забыть убрать!
+            dangeon.Level[0,1] = $"[S]";
+
             while (isGame == true)
             {
                 player.Room = dangeon.Level[player.Location[0], player.Location[1]];
