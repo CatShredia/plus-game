@@ -12,7 +12,7 @@ namespace PLUS_game
 
             // while (isGame)
             // {
-            dangeon.WriteLevel();
+                dangeon.WriteLevel();
             // }
         }
     }

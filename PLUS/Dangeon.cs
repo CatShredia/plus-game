@@ -31,31 +31,13 @@ namespace PLUS_game
                 }
             }
         }
-        public string GetTypeOfRoom()
+        public char GetTypeOfRoom()
         {
             Random random = new Random();
 
-            WriteLine(TypeOfRoom.Length);
-
             int number = random.Next(1, TypeOfRoom.Length);
 
-            switch (number)
-            {
-                case 1:
-                    break;
-                default:
-                    WriteLine("---");
-                    ForegroundColor = ConsoleColor.Black;
-                    BackgroundColor = ConsoleColor.Red;
-                    Write("Game error: don't find a type of room");
-                    ForegroundColor = defaultForeground;
-                    BackgroundColor = defaultBackground;
-                    WriteLine("---");
-
-                    break;
-            }
-
-            return null;
+            return TypeOfRoom[number];
         }
         public void WriteLevel()
         {
@@ -65,8 +47,9 @@ namespace PLUS_game
             {
                 for (int j = 0; j < CoefOfGame * 2; j++)
                 {
+                    ChoiseColor(Level[i,j]);
                     Write(Level[i, j]);
-                    // Write($" {i}/{j} ");
+                    ForegroundColor = defaultForeground;
 
                     if (j == CoefOfGame * 2 - 1)
                     {
@@ -75,6 +58,20 @@ namespace PLUS_game
                 }
             }
             WriteLine("---");
+        }
+
+        public void ChoiseColor(string str)
+        {
+            ForegroundColor = str[1] switch
+            {
+                '/' => ConsoleColor.Cyan,
+                'E' => ConsoleColor.Red,
+                'C' => ConsoleColor.Yellow,
+                'T' => ConsoleColor.Blue,
+                'S' => ConsoleColor.Green,
+                'B' => ConsoleColor.DarkRed,
+                _ => defaultForeground,
+            };
         }
     }
 }
