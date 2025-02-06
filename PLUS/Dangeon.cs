@@ -30,12 +30,14 @@ namespace PLUS_game
                     Level[i, j] = $"[{GetTypeOfRoom()}]";
                 }
             }
+
+            Level[CoefOfGame * 2 - 1, CoefOfGame * 2 - 1] = $"[B]";
         }
         public char GetTypeOfRoom()
         {
             Random random = new Random();
 
-            int number = random.Next(1, TypeOfRoom.Length);
+            int number = random.Next(1, TypeOfRoom.Length - 1);
 
             return TypeOfRoom[number];
         }
@@ -47,7 +49,7 @@ namespace PLUS_game
             {
                 for (int j = 0; j < CoefOfGame * 2; j++)
                 {
-                    ChoiseColor(Level[i,j]);
+                    ChoiseColor(Level[i, j]);
                     Write(Level[i, j]);
                     ForegroundColor = defaultForeground;
 
@@ -72,6 +74,98 @@ namespace PLUS_game
                 'B' => ConsoleColor.DarkRed,
                 _ => defaultForeground,
             };
+        }
+
+        public void SetPlayer(Player player)
+        {
+            Level[player.Location[0], player.Location[1]] = "[/]";
+
+            if(!((player.Location[0] == 0) && (player.Location[1] == 0))) {
+                Level[player.LastLocation[0],player.LastLocation[1]] = $"[.]";
+            }
+        }
+
+        public void Action(string action)
+        {
+            switch (action[1])
+            {
+                case '/':
+                    StartRoom();
+                    break;
+                case 'E':
+                    EnemyRoom();
+                    break;
+                case 'C':
+                    ChestRoom();
+                    break;
+                case 'T':
+                    TrapRoom();
+                    break;
+                case 'S':
+                    StoreRoom();
+                    break;
+                case 'B':
+                    BossRoom();
+                    break;
+
+                default:
+                    PrintError("Действия не существует, Dangeon: 106");
+                    break;
+            }
+
+        }
+
+        public void Activity()
+        {
+            WriteLine("Для продолжения, введите любой символ (открытие инвентаря - e)");
+
+            string active = ReadLine();
+        }
+
+        public void StartRoom()
+        {
+            WriteLine("Стартовая комната!");
+
+            Activity();
+             
+        }
+        public void EnemyRoom()
+        {
+            WriteLine("Вы наткнулись на монстра");
+
+            Activity();
+             
+        }
+        public void ChestRoom()
+        {
+            WriteLine("Сундук начинает разговор");
+
+            Activity();
+             
+        }
+        public void TrapRoom()
+        {
+            WriteLine("О нет, ловушка...");
+
+            Activity();
+             
+        }
+        public void StoreRoom()
+        {
+            WriteLine("Усатый торговец медленно подползает к вам,");
+            WriteLine("\'Не хотите ли вы что-нибудь прикупить?\'");
+
+            Activity();
+             
+        }
+        public void BossRoom()
+        {
+            WriteLine("Чудовище преграждает вам дорогу");
+
+            Game.isGame = false;
+
+            Activity();
+             
         }
     }
 }
