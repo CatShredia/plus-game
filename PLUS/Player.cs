@@ -7,8 +7,8 @@ namespace PLUS_game
     {
         public int maxHP = 100;
 
-        public int[] Location = [0,0];
-        public int[] LastLocation = [0,0];
+        public int[] Location = [0, 0];
+        public int[] LastLocation = [0, 0];
 
         public string Room;
 
@@ -58,19 +58,17 @@ namespace PLUS_game
         }
         public void OpenInventory()
         {
+            
             PrintWeapons();
 
-
-            WriteLine("Предметы");
-            WriteLine("Выберите предмет \n(введите порядковый номер, для выхода - 0)");
-
+            PrintWithColor("Предметы", ConsoleColor.Black, ConsoleColor.DarkBlue);
 
             for (int i = 0; i < Inventory.Length; i++)
             {
                 WriteLine($"{i + 1}: {Inventory[i].Name} восстановит: {Inventory[i].Effect}HP ");
             }
 
-            int number = Convert.ToInt32(ReadLine()) - 1;
+            int number = ReadIntFromPlayer("порядковый номер, для выхода - 0");
 
             if (number != -1)
             {
@@ -91,6 +89,7 @@ namespace PLUS_game
                     WriteLine("Крайне расточительно использовать сейчас лекарство!");
                 }
             }
+
         }
 
         public int CheckPlaceToItem()
@@ -108,7 +107,7 @@ namespace PLUS_game
 
         public void PrintWeapons()
         {
-            WriteLine("Оружиe");
+            PrintWithColor("Оружие", ConsoleColor.Black, ConsoleColor.DarkBlue);
 
             for (int i = 0; i < weapons.Count; i++)
             {
@@ -121,7 +120,7 @@ namespace PLUS_game
             PrintWeapons();
             WriteLine("Скорее выбирай, чем ударишь!");
 
-            int number = Convert.ToInt32(ReadLine()) - 1;
+            int number = ReadIntFromPlayer("порядковый номер оружия") - 1;
 
             if (number >= 0 && number < weapons.Count)
             {

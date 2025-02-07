@@ -12,7 +12,8 @@ namespace PLUS_game
 
         public int HP;
 
-        public static void SetDefaultColor() {
+        public static void SetDefaultColor()
+        {
             ForegroundColor = defaultForeground;
             BackgroundColor = defaultBackground;
         }
@@ -21,32 +22,18 @@ namespace PLUS_game
         {
             ForegroundColor = ConsoleColor.Black;
             BackgroundColor = ConsoleColor.Red;
-            WriteLine($"Game error: {err}");
-            
-            SetDefaultColor();
-        }
-
-        public static void PrintHello()
-        {
-            WriteLine("Hello, this is PLUS-game!");
-        }
-
-        public static void PrintDefeate() {
-            WriteLine("----");
-            ForegroundColor = ConsoleColor.Black;
-            BackgroundColor = ConsoleColor.Green;
-
-            Write("Поражение");
+            Write($"Game error: {err}");
 
             SetDefaultColor();
 
             Write("\n");
+        }
 
-            ForegroundColor = ConsoleColor.Black;
-            BackgroundColor = ConsoleColor.Green;
-
-            WriteLine("Ваша жизнь оборвалась......");
-
+        public static void PrintDefeate()
+        {
+            
+            PrintWithColor("Поражание, монстр начинает заживо пожирать вас", ConsoleColor.Black, ConsoleColor.DarkRed);
+            PrintWithColor("Ваша жизнь оборвалась......", ConsoleColor.Black, ConsoleColor.Green);
         }
 
         public void ChoiseColor(string str)
@@ -61,6 +48,48 @@ namespace PLUS_game
                 'B' => ConsoleColor.DarkRed,
                 _ => defaultForeground,
             };
+        }
+
+        public static void PrintWithColor(string str, ConsoleColor foregrColor, ConsoleColor backgrColor) {
+            ForegroundColor = foregrColor;
+            BackgroundColor = backgrColor;
+            Write(str);
+            SetDefaultColor();
+            Write("\n");
+        }
+
+        public int ReadIntFromPlayer(string name)
+        {
+            try
+            {
+                WriteLine("Введите " + name);
+                int number = Convert.ToInt32(ReadLine());
+
+                return number;
+            }
+            catch (Exception e)
+            {
+                PrintError("Возникло исключение при вводе числа, необходимо число " + e.Message);
+
+                return ReadIntFromPlayer(name);
+            }
+        }
+
+        public string ReadStringFromPlayer(string name)
+        {
+            try
+            {
+                WriteLine("Введите " + name);
+                string str = ReadLine();
+
+                return str;
+            }
+            catch (Exception e)
+            {
+                PrintError("Возникло исключение при вводе строки " + e.Message);
+
+                return ReadStringFromPlayer(name);
+            }
         }
     }
 }

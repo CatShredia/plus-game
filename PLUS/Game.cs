@@ -16,10 +16,9 @@ namespace PLUS_game
 
         public Game()
         {
-            // Clear();
-            WriteLine("----");
+            Clear();
 
-            PrintHello();
+            PrintWithColor("Добро пожаловать в PLUS", ConsoleColor.Black, ConsoleColor.DarkBlue);
 
             isGame = true;
             player = new Player(100);
@@ -41,23 +40,19 @@ namespace PLUS_game
 
                 dangeon.SetPlayer(player);
 
-                WriteLine("----");
                 dangeon.WriteLevel();
 
-                WriteLine("----");
                 Write("Комната игрока: ");
-                Write($"Местоположение {player.Location[0]}/{player.Location[1]} \n");
-                Write($"Местоположение last {player.LastLocation[0]}/{player.LastLocation[1]} \n");
+                // Write($"Местоположение {player.Location[0]}/{player.Location[1]} \n");
+                // Write($"Местоположение last {player.LastLocation[0]}/{player.LastLocation[1]} \n");
                 ChoiseColor(player.Room);
                 WriteLine($"{player.Room}");
                 ForegroundColor = defaultForeground;
 
-                WriteLine("----");
                 dangeon.Action(player.Room);
 
                 if (Dangeon.isNewLevel == false)
                 {
-                    WriteLine("Движение!!!!!!!!!!!!!!!");
                     player.Move();
                 }
                 else
@@ -72,8 +67,9 @@ namespace PLUS_game
             bool isFight = true;
             while (isFight)
             {
-                WriteLine($"У вас {player.HP}HP");
-                WriteLine($"У противника {monster.HP}HP");
+                PrintWithColor($"У вас: {player.HP}HP", ConsoleColor.Black, ConsoleColor.DarkRed);
+
+                PrintWithColor($"У противника {monster.HP}HP", ConsoleColor.Black, ConsoleColor.DarkCyan);
 
                 monster.HP -= player.Attack(); // удар игрока
 
@@ -95,7 +91,6 @@ namespace PLUS_game
                     isFight = false;
                     isGame = false;
                 }
-                WriteLine("---");
             }
         }
 

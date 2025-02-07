@@ -58,6 +58,8 @@ namespace PLUS_game
         }
         public void WriteLevel()
         {
+            PrintWithColor($"Уровень {Game.LevelNumber}", ConsoleColor.Black, ConsoleColor.DarkBlue);
+            WriteLine();
             for (int i = 0; i < LevelSize[0]; i++)
             {
                 for (int j = 0; j < LevelSize[1]; j++)
@@ -86,6 +88,7 @@ namespace PLUS_game
 
         public void Action(string action)
         {
+            WriteLine("---");
             switch (action[1])
             {
                 case '/':
@@ -122,10 +125,9 @@ namespace PLUS_game
 
             while (isInventory && Game.isGame)
             {
-                WriteLine("(e - открытие инвентаря)");
-                WriteLine($"У вас: {Game.player.HP}HP");
+                PrintWithColor($"У вас: {Game.player.HP}HP", ConsoleColor.Black, ConsoleColor.DarkRed);
 
-                active = ReadLine().ToLower();
+                active = ReadStringFromPlayer("любой символ (e - инвентарь)").ToLower();
 
                 if (active != "")
                 {
@@ -144,12 +146,14 @@ namespace PLUS_game
                 }
 
             }
+            WriteLine("---");
         }
 
         public void StartRoom()
         {
-            WriteLine("Стартовая комната!");
-            WriteLine("Выберите 2 оружия, введя по очереди их порядковые номера: ");
+            ChoiseColor(Game.player.Room);
+            WriteLine("Стартовая комната.");
+            SetDefaultColor();
 
             for (int i = 0; i < Game.weaponsCollection.Count; i++)
             {
@@ -159,10 +163,11 @@ namespace PLUS_game
             int number;
             for (int i = 0; i < 2; i++)
             {
-                number = Convert.ToInt32(ReadLine()) - 1;
+                number = ReadIntFromPlayer("порядковый номер оружия") - 1;
 
                 if (number >= 0 && number < Game.weaponsCollection.Count)
                 {
+                    PrintWithColor($"Выбран {Game.weaponsCollection[number].Name}", ConsoleColor.Black, ConsoleColor.DarkBlue);
                     Game.player.weapons.Add(Game.weaponsCollection[number]);
                 }
                 else
@@ -218,9 +223,7 @@ namespace PLUS_game
             int number = Game.player.CheckPlaceToItem();
             if (number != -1)
             {
-                WriteLine("\'Не хотите ли вы купить зелье? (yes/no)\'");
-
-                string str = ReadLine();
+                string str = ReadStringFromPlayer("\'Не хотите ли вы купить зелье? (yes/no)\'");
 
                 if (str.Equals("yes"))
                 {
@@ -248,8 +251,6 @@ namespace PLUS_game
 
         public void ToNewLevel()
         {
-            WriteLine("-----");
-
             CoefOfGame += 1;
             isNewLevel = true;
 
@@ -258,11 +259,8 @@ namespace PLUS_game
 
             Game.LevelNumber++;
 
-            ForegroundColor = ConsoleColor.Black;
-            BackgroundColor = ConsoleColor.White;
-            Write($"Переход на {Game.LevelNumber} этаж");
+            PrintWithColor($"Переход на {Game.LevelNumber} этаж", ConsoleColor.Black, ConsoleColor.White);
             SetDefaultColor();
-            Write("\n");
 
             Game.dangeon.GenerateLevel();
         }

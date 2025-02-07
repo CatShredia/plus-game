@@ -48,7 +48,7 @@ namespace PLUS_game
             WriteLine("Вычислите модуль числа: " + number);
 
             number = Math.Abs(number);
-            int numberAnswer = Convert.ToInt32(ReadLine()); ;
+            int numberAnswer = ReadIntFromPlayer("Ответ");
 
             if (number == numberAnswer)
             {
@@ -85,8 +85,7 @@ namespace PLUS_game
                 }
                 Write(item + " ");
             }
-
-            int numberAnswer = Convert.ToInt32(ReadLine()); ;
+            int numberAnswer = ReadIntFromPlayer("Ответ");
 
             if (number == numberAnswer)
             {
@@ -125,7 +124,7 @@ namespace PLUS_game
                 Write(item + " ");
             }
 
-            int numberAnswer = Convert.ToInt32(ReadLine()); ;
+            int numberAnswer = ReadIntFromPlayer("Ответ");
 
             if (number == numberAnswer)
             {
@@ -145,7 +144,7 @@ namespace PLUS_game
         {
             WriteLine($"Решите загадку(ответ в виде одного слова): {task}");
 
-            string playerAnswer = ReadLine();
+            string playerAnswer = ReadStringFromPlayer("Ответ");
 
             if (playerAnswer.Equals(answer))
             {
