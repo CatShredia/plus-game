@@ -7,6 +7,8 @@ namespace PLUS_game
     {
         public string[,] Level;
 
+        public int[] LevelSize;
+
         /*
             / - player or start room
             E - enemy
@@ -17,23 +19,34 @@ namespace PLUS_game
         */
         public char[] TypeOfRoom = ['/', 'E', 'C', 'T', 'S', 'B'];
 
+        public static bool isNewLevel = false;
+
         public Dangeon()
         {
-            Level = new string[CoefOfGame * 2, CoefOfGame * 2];
+            
         }
         public void GenerateLevel()
         {
-            for (int i = 0; i < CoefOfGame * 2; i++)
+            LevelSize = [CoefOfGame, CoefOfGame];
+            Level = new string[LevelSize[0], LevelSize[1]];
+
+            Game.player.Location = [0,0];
+            Game.player.LastLocation = [0,0];
+
+            for (int i = 0; i < LevelSize[0]; i++)
             {
-                for (int j = 0; j < CoefOfGame * 2; j++)
+                for (int j = 0; j < LevelSize[1]; j++)
                 {
                     Level[i, j] = $"[{GetTypeOfRoom()}]";
                 }
             }
 
-            Level[0, 0] = $"[/]";
+            if (Game.LevelNumber == 1)
+            {
+                Level[0, 0] = $"[/]";
+            }
 
-            Level[CoefOfGame * 2 - 1, CoefOfGame * 2 - 1] = $"[B]";
+            Level[LevelSize[0] - 1, LevelSize[1] - 1] = $"[B]";
         }
         public char GetTypeOfRoom()
         {
@@ -45,15 +58,15 @@ namespace PLUS_game
         }
         public void WriteLevel()
         {
-            for (int i = 0; i < CoefOfGame * 2; i++)
+            for (int i = 0; i < LevelSize[0]; i++)
             {
-                for (int j = 0; j < CoefOfGame * 2; j++)
+                for (int j = 0; j < LevelSize[1]; j++)
                 {
                     ChoiseColor(Level[i, j]);
                     Write(Level[i, j]);
                     ForegroundColor = defaultForeground;
 
-                    if (j == CoefOfGame * 2 - 1)
+                    if (j == LevelSize[0] - 1)
                     {
                         Write("\n");
                     }
@@ -213,7 +226,9 @@ namespace PLUS_game
                 {
                     Game.player.Inventory[number] = new Item("Зелье от шапки", "зелье от торговца", 15);
                 }
-            } else {
+            }
+            else
+            {
                 WriteLine("И так места нет, пойду дальше");
             }
 
@@ -228,10 +243,28 @@ namespace PLUS_game
 
             Game.MonsterFight(monster);
 
-            Game.isGame = false;
-
             Activity();
+        }
 
+        public void ToNewLevel()
+        {
+            WriteLine("-----");
+
+            CoefOfGame += 1;
+            isNewLevel = true;
+
+            LevelSize = [CoefOfGame, CoefOfGame];
+            Level = new string[LevelSize[0], LevelSize[1]];
+
+            Game.LevelNumber++;
+
+            ForegroundColor = ConsoleColor.Black;
+            BackgroundColor = ConsoleColor.White;
+            Write($"Переход на {Game.LevelNumber} этаж");
+            SetDefaultColor();
+            Write("\n");
+
+            Game.dangeon.GenerateLevel();
         }
     }
 }

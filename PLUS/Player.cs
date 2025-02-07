@@ -1,14 +1,14 @@
 namespace PLUS_game
 {
-
+    using System.Diagnostics.Tracing;
     using static System.Console;
 
     class Player : Object
     {
         public int maxHP = 100;
 
-        public int[] Location;
-        public int[] LastLocation;
+        public int[] Location = [0,0];
+        public int[] LastLocation = [0,0];
 
         public string Room;
 
@@ -20,12 +20,6 @@ namespace PLUS_game
         {
             maxHP = hp;
             HP = maxHP;
-
-            Location = new int[2];
-            LastLocation = new int[2];
-
-            Location[0] = 0;
-            Location[1] = 0;
 
             Inventory = new Item[5];
 
@@ -50,11 +44,11 @@ namespace PLUS_game
             LastLocation[0] = Location[0];
             LastLocation[1] = Location[1];
 
-            if (Location[1] < CoefOfGame * 2)
+            if (Location[1] < Game.dangeon.LevelSize[0])
             {
                 Location[1]++;
 
-                if ((CoefOfGame * 2) == Location[1])
+                if (Game.dangeon.LevelSize[0] == Location[1])
                 {
                     Location[1] = 0;
                     Location[0]++;

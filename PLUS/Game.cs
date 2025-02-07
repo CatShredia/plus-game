@@ -12,22 +12,24 @@ namespace PLUS_game
 
         public static List<Weapon> weaponsCollection;
 
+        public static int LevelNumber = 1;
+
         public Game()
         {
-            Clear();
+            // Clear();
             WriteLine("----");
 
             PrintHello();
 
             isGame = true;
-            dangeon = new Dangeon();
             player = new Player(100);
+            dangeon = new Dangeon();
 
             weaponsCollection = [
                 new Weapon("Меч", 10),
                 new Weapon("Лук", 20),
                 new Weapon("Арбалет", 40),
-                new Weapon("Автомат", 100),
+                new Weapon("Автомат", 1000),
                 new Weapon("Заточка", 1),
             ];
             // -----
@@ -38,17 +40,30 @@ namespace PLUS_game
                 player.Room = dangeon.Level[player.Location[0], player.Location[1]];
 
                 dangeon.SetPlayer(player);
+
                 WriteLine("----");
                 dangeon.WriteLevel();
+
                 WriteLine("----");
                 Write("Комната игрока: ");
+                Write($"Местоположение {player.Location[0]}/{player.Location[1]} \n");
+                Write($"Местоположение last {player.LastLocation[0]}/{player.LastLocation[1]} \n");
                 ChoiseColor(player.Room);
                 WriteLine($"{player.Room}");
                 ForegroundColor = defaultForeground;
+
                 WriteLine("----");
                 dangeon.Action(player.Room);
 
-                player.Move();
+                if (Dangeon.isNewLevel == false)
+                {
+                    WriteLine("Движение!!!!!!!!!!!!!!!");
+                    player.Move();
+                }
+                else
+                {
+                    Dangeon.isNewLevel = false;
+                }
             }
         }
 
@@ -65,6 +80,11 @@ namespace PLUS_game
                 if (monster.isNullHP())
                 {
                     isFight = false;
+
+                    if (monster.Name == "BOSS")
+                    {
+                        dangeon.ToNewLevel();
+                    }
                 }
                 else
                 {
