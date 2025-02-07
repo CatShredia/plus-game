@@ -18,7 +18,7 @@ namespace PLUS_game
         {
             Clear();
 
-            PrintWithColor("Добро пожаловать в PLUS", ConsoleColor.Black, ConsoleColor.DarkBlue);
+            PrintWithColor("Добро пожаловать в PLUS\n", ConsoleColor.Black, ConsoleColor.DarkBlue);
 
             isGame = true;
             player = new Player(100);

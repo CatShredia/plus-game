@@ -16,6 +16,8 @@ namespace PLUS_game
 
         public List<Weapon> weapons;
 
+        public int Wallet = 10;
+
         public Player(int hp)
         {
             maxHP = hp;

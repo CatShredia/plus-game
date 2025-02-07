@@ -23,15 +23,15 @@ namespace PLUS_game
 
         public Dangeon()
         {
-            
+
         }
         public void GenerateLevel()
         {
             LevelSize = [CoefOfGame, CoefOfGame];
             Level = new string[LevelSize[0], LevelSize[1]];
 
-            Game.player.Location = [0,0];
-            Game.player.LastLocation = [0,0];
+            Game.player.Location = [0, 0];
+            Game.player.LastLocation = [0, 0];
 
             for (int i = 0; i < LevelSize[0]; i++)
             {
@@ -126,6 +126,8 @@ namespace PLUS_game
             while (isInventory && Game.isGame)
             {
                 PrintWithColor($"У вас: {Game.player.HP}HP", ConsoleColor.Black, ConsoleColor.DarkRed);
+
+                PrintWithColor($"У вас: {Game.player.Wallet} руб", ConsoleColor.Black, ConsoleColor.DarkYellow);
 
                 active = ReadStringFromPlayer("любой символ (e - инвентарь)").ToLower();
 
@@ -223,11 +225,19 @@ namespace PLUS_game
             int number = Game.player.CheckPlaceToItem();
             if (number != -1)
             {
-                string str = ReadStringFromPlayer("\'Не хотите ли вы купить зелье? (yes/no)\'");
+                string str = ReadStringFromPlayer("\'Не хотите ли вы купить зелье за 10 руб? (yes/no)\'");
 
                 if (str.Equals("yes"))
                 {
-                    Game.player.Inventory[number] = new Item("Зелье от шапки", "зелье от торговца", 15);
+                    if (Game.player.Wallet < 10)
+                    {
+                        PrintWithColor("Денег нет, на покупку зелья!",ConsoleColor.Black, ConsoleColor.Green);
+                    }
+                    else
+                    {
+                        Game.player.Wallet -= 10;
+                        Game.player.Inventory[number] = new Item("Зелье от торгаша", "зелье от торговца", 15);
+                    }
                 }
             }
             else

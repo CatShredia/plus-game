@@ -11,6 +11,8 @@ namespace PLUS_game
 
         public int Effect;
 
+        public int Cost;
+
         public Item(string name, string description, int effect) {
             Name = name;
 
