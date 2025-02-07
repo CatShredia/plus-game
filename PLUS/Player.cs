@@ -18,7 +18,8 @@ namespace PLUS_game
 
         public Player(int hp)
         {
-            HP = hp;
+            maxHP = hp;
+            HP = maxHP;
 
             Location = new int[2];
             LastLocation = new int[2];
@@ -66,8 +67,8 @@ namespace PLUS_game
             PrintWeapons();
 
 
-            WriteLine("---Предметы---");
-            WriteLine("Выберите предмет(введите порядковый номер, для выхода - 0):");
+            WriteLine("Предметы");
+            WriteLine("Выберите предмет \n(введите порядковый номер, для выхода - 0)");
 
 
             for (int i = 0; i < Inventory.Length; i++)
@@ -113,7 +114,7 @@ namespace PLUS_game
 
         public void PrintWeapons()
         {
-            WriteLine("---Оружие---");
+            WriteLine("Оружиe");
 
             for (int i = 0; i < weapons.Count; i++)
             {
@@ -143,6 +144,7 @@ namespace PLUS_game
         {
             if (HP < 1)
             {
+                PrintDefeate();
                 return true;
             }
             else

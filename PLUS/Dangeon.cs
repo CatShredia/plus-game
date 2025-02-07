@@ -45,8 +45,6 @@ namespace PLUS_game
         }
         public void WriteLevel()
         {
-            WriteLine("---");
-
             for (int i = 0; i < CoefOfGame * 2; i++)
             {
                 for (int j = 0; j < CoefOfGame * 2; j++)
@@ -61,21 +59,6 @@ namespace PLUS_game
                     }
                 }
             }
-            WriteLine("---");
-        }
-
-        public void ChoiseColor(string str)
-        {
-            ForegroundColor = str[1] switch
-            {
-                '/' => ConsoleColor.Cyan,
-                'E' => ConsoleColor.Red,
-                'C' => ConsoleColor.Yellow,
-                'T' => ConsoleColor.Blue,
-                'S' => ConsoleColor.Green,
-                'B' => ConsoleColor.DarkRed,
-                _ => defaultForeground,
-            };
         }
 
         public void SetPlayer(Player player)
@@ -124,9 +107,9 @@ namespace PLUS_game
 
             bool isInventory = true;
 
-            while (isInventory)
+            while (isInventory && Game.isGame)
             {
-                WriteLine("(0 / другие символы - продолжить) (e - открытие инвентаря)");
+                WriteLine("(e - открытие инвентаря)");
                 WriteLine($"У вас: {Game.player.HP}HP");
 
                 active = ReadLine().ToLower();

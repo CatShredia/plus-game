@@ -14,9 +14,14 @@ namespace PLUS_game
 
         public Game()
         {
+            Clear();
+            WriteLine("----");
+
+            PrintHello();
+
             isGame = true;
             dangeon = new Dangeon();
-            player = new Player(100 * CoefOfGame);
+            player = new Player(100);
 
             weaponsCollection = [
                 new Weapon("Меч", 10),
@@ -28,16 +33,19 @@ namespace PLUS_game
             // -----
             dangeon.GenerateLevel();
 
-            // TODO: не забыть убрать!
-            dangeon.Level[0,1] = $"[S]";
-
             while (isGame == true)
             {
                 player.Room = dangeon.Level[player.Location[0], player.Location[1]];
 
                 dangeon.SetPlayer(player);
+                WriteLine("----");
                 dangeon.WriteLevel();
-
+                WriteLine("----");
+                Write("Комната игрока: ");
+                ChoiseColor(player.Room);
+                WriteLine($"{player.Room}");
+                ForegroundColor = defaultForeground;
+                WriteLine("----");
                 dangeon.Action(player.Room);
 
                 player.Move();
@@ -62,12 +70,14 @@ namespace PLUS_game
                 {
                     player.HP -= monster.Attack(); // удар монстра
                 }
-                if(player.isNullHP()) {
+                if (player.isNullHP())
+                {
                     isFight = false;
                     isGame = false;
                 }
-                
+                WriteLine("---");
             }
         }
+
     }
 }
