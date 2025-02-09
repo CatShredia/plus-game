@@ -1,8 +1,5 @@
 .vscode
 
-PLUS/bin
-PLUS/obj
+PLUS
 
 exm
-
-test.txt
