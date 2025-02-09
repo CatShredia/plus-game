@@ -55,8 +55,7 @@ namespace PLUS_game
                 ChoiseColor(player.Room);
                 WriteLine($"{player.Room}");
 
-                // TODO: восстановить
-                // dangeon.Action(player.Room);
+                dangeon.Action(player.Room);
                 if (player.Room == "[B]")
                 {
                     dangeon.ToNewLevel();

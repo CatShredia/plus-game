@@ -87,7 +87,7 @@ namespace PLUS_game
                 {
                     if (Game.LevelNumber == 1)
                     {
-                        RandomOfRoom[i] = 1; // 1
+                        RandomOfRoom[i] = 1; 
                     }
                     else
                     {
@@ -97,32 +97,37 @@ namespace PLUS_game
                 else if (i == 1)
                 {
                     // ! room - [Enemy]
-                    RandomOfRoom[i] = Game.CoefOfGame / 2; // 1 -> 2
+                    RandomOfRoom[i] = Game.LevelNumber * Game.LevelNumber; 
                 }
                 else if (i == 2)
                 {
                     // ! room - [Chest]
-                    RandomOfRoom[i] = Game.CoefOfGame - 2; // 0 -> 2
+                    RandomOfRoom[i] = (Game.LevelNumber - 1) * Game.LevelNumber; 
+                }
+                else if (i == 3)
+                {
+                    // ! room - [Trap]
+                    RandomOfRoom[i] = (Game.LevelNumber - 1) * Game.LevelNumber - Game.LevelNumber;
                 }
                 else if (i == 4)
                 {
                     // ! room - [Store / Shop]
-                    RandomOfRoom[i] = Game.CoefOfGame / 2; // 0 -> 2
+                    RandomOfRoom[i] = Game.LevelNumber * Game.LevelNumber;
                 }
                 else if (i == 5)
                 {
                     // ! room - [Boss!!!]
-                    RandomOfRoom[i] = 1; // 1
+                    RandomOfRoom[i] = 1; 
                 }
 
                 CountOfRoom -= RandomOfRoom[i];
             }
 
-            if (CountOfRoom != 0)
-            {
-                RandomOfRoom[3] = CountOfRoom; // 1
-                CountOfRoom = 0;
-            }
+            // if(CountOfRoom > 0) {
+            //     PrintError("Не все типы комнат распределены: Level 127");
+            // } else if(CountOfRoom < 0) {
+            //     PrintError("Мистика, кол-во отрицательное: Level 127");
+            // }
         }
         public void WriteLevel()
         {
@@ -154,39 +159,5 @@ namespace PLUS_game
                 LevelStr[Game.player.LastLocation[0], Game.player.LastLocation[1]] = $"[.]";
             }
         }
-
-        // TODO: переписать
-
-        // public void GenerateLevel()
-        // {
-        //     LevelSize = [Game.CoefOfGame, Game.CoefOfGame];
-        //     LevelStr = new string[LevelSize[0], LevelSize[1]];
-
-        //     Game.player.Location = [0, 0];
-        //     Game.player.LastLocation = [0, 0];
-
-        //     for (int i = 0; i < LevelSize[0]; i++)
-        //     {
-        //         for (int j = 0; j < LevelSize[1]; j++)
-        //         {
-        //             LevelStr[i, j] = $"[{GetTypeOfRoom()}]";
-        //         }
-        //     }
-
-        //     if (Game.LevelNumber == 1)
-        //     {
-        //         LevelStr[0, 0] = $"[/]";
-        //     }
-
-        //     LevelStr[LevelSize[0] - 1, LevelSize[1] - 1] = $"[B]";
-        // }
-        // public char GetTypeOfRoom()
-        // {
-        //     Random random = new Random();
-
-        //     int number = random.Next(1, TypeOfRoom.Length - 1);
-
-        //     return TypeOfRoom[number];
-        // }
     }
 }
