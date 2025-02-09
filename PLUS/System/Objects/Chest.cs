@@ -8,38 +8,53 @@ namespace PLUS_game
     using static System.Console;
     class Chest : Object
     {
-        public Chest()
+        public Game Game;
+        public Chest(Game game)
         {
-            Random random = new Random();
-            WriteLine("Сундук!");
-            int number = random.Next(1, 7);
+            Game = game;
+            Random random = new();
+            // int number = random.Next(1, 7);
+            int number = 3;
+
+            bool result;
+
             switch (number)
             {
                 case 1:
-                    AbsTask(random);
+                    result = AbsTask(random);
                     break;
                 case 2:
-                    ArrayMinTask(random);
+                    result = ArrayMinTask(random);
                     break;
                 case 3:
-                    ArrayMaxTask(random);
+                    result = ArrayMaxTask(random);
                     break;
                 case 4:
-                    ArrayMaxTask(random);
+                    result = Mystery("Не огонь, а жжётся.", "Крапива");
                     break;
                 case 5:
-                    Mystery("Не огонь, а жжётся.", "Крапива");
+                    result = Mystery("Четыре братца под одной шляпкой стоят, одним пояском подпоясаны.", "Стол");
                     break;
                 case 6:
-                    Mystery("Золотое решето, чёрных домиков полно.", "Подсолнух");
+                    result = Mystery("Золотое решето, чёрных домиков полно.", "Подсолнух");
                     break;
                 case 7:
-                    Mystery("Без рук, без ног, а ворота отворяет.", "Ветер");
+                    result = Mystery("Без рук, без ног, а ворота отворяет.", "Ветер");
                     break;
                 default:
                     PrintError("Ошибка выбора задачи Chest: 40");
+                    result = false;
                     break;
             }
+
+            if (result == true)
+            {
+                OpenedChest();
+            }
+        }
+        public void OpenedChest()
+        {
+            Game.player.Wallet += 20;
         }
         public bool AbsTask(Random random)
         {
@@ -85,6 +100,7 @@ namespace PLUS_game
             else
             {
                 WriteLine("Сундук не открыт, ответ неверный");
+                WriteLine("Ответ: " + number);
                 return false;
             }
         }
@@ -96,8 +112,8 @@ namespace PLUS_game
             {
                 numbers[i] = random.Next(-100, 100);
             }
-            WriteLine("Найдите наименьшее число в массиве: ");
-            number = 100;
+            WriteLine("Найдите наибольшее число в массиве: ");
+            number = -100;
             foreach (int item in numbers)
             {
                 if (number < item)
@@ -115,6 +131,7 @@ namespace PLUS_game
             else
             {
                 WriteLine("Сундук не открыт, ответ неверный");
+                WriteLine("Ответ: " + number);
                 return false;
             }
         }

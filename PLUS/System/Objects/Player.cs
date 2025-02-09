@@ -11,8 +11,8 @@ namespace PLUS_game
     {
         private Game Game;
         public int maxHP;
-        public int[] Location = { 0, 0 };
-        public int[] LastLocation = { 0, 0 };
+        public int[] Location = [0, 0];
+        public int[] LastLocation = [0, 0];
         public string Room;
         public Item[] Inventory;
         public List<Weapon> weapons;
@@ -33,13 +33,14 @@ namespace PLUS_game
                 }
                 else
                 {
-                    Inventory[i] = new Item("Пустой карман", "ну, воздух на самом деле", 0);
+                    Inventory[i] = new Item(null, null, 0);
                 }
             }
         }
-        public void SetLocation() {
-            Location = [0,0];
-            LastLocation = [0,0];
+        public void SetLocation()
+        {
+            Location = [0, 0];
+            LastLocation = [0, 0];
         }
         public void Move()
         {
@@ -58,10 +59,17 @@ namespace PLUS_game
         public void OpenInventory()
         {
             PrintWeapons();
+            PrintWithColor($"У вас: {Game.player.Wallet} руб", ConsoleColor.Black, ConsoleColor.DarkYellow);
             PrintWithColor("Предметы", ConsoleColor.Black, ConsoleColor.DarkBlue);
             for (int i = 0; i < Inventory.Length; i++)
             {
-                WriteLine($"{i + 1}: {Inventory[i].Name} восстановит: {Inventory[i].Effect}HP ");
+                if (Inventory[i].Name != null)
+                {
+                    WriteLine($"{i + 1}: {Inventory[i].Name} восстановит: {Inventory[i].Effect}HP ");
+                } else {
+                    WriteLine($"{i + 1}: Пустой Слот ");
+                }
+
             }
             int number = ReadIntFromPlayer("порядковый номер, для выхода - 0") - 1;
             if (number != -1)
@@ -76,7 +84,7 @@ namespace PLUS_game
                     {
                         HP += Inventory[number].Effect;
                     }
-                    Inventory[number] = new Item("Пустой карман", "ну, воздух на самом деле", 0);
+                    Inventory[number] = new Item(null, null, 0);
                 }
                 else
                 {

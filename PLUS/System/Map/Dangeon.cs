@@ -15,7 +15,7 @@ namespace PLUS_game
 
             Level = new Level(Game);
         }
-        
+
         public void Action(string action)
         {
             WriteLine("---");
@@ -56,8 +56,6 @@ namespace PLUS_game
             while (isInventory && Game.isGame)
             {
                 PrintWithColor($"У вас: {Game.player.HP}HP", ConsoleColor.Black, ConsoleColor.DarkRed);
-
-                PrintWithColor($"У вас: {Game.player.Wallet} руб", ConsoleColor.Black, ConsoleColor.DarkYellow);
 
                 active = ReadStringFromPlayer("любой символ (e - инвентарь)").ToLower();
 
@@ -100,6 +98,7 @@ namespace PLUS_game
                 if (number >= 0 && number < Game.gameWeaponsCollection.Count)
                 {
                     PrintWithColor($"Выбран {Game.gameWeaponsCollection[number].Name}", ConsoleColor.Black, ConsoleColor.DarkBlue);
+                    WriteLine();
                     Game.player.weapons.Add(Game.gameWeaponsCollection[number]);
                 }
                 else
@@ -114,7 +113,9 @@ namespace PLUS_game
         }
         public void EnemyRoom()
         {
-            WriteLine("Вы наткнулись на монстра");
+            ChoiseColor(Game.player.Room);
+            WriteLine("Вы наткнулись на монстра.");
+            SetDefaultColor();
 
             Monster monster = new Monster("Монстр");
 
@@ -125,20 +126,25 @@ namespace PLUS_game
         }
         public void ChestRoom()
         {
-            WriteLine("Сундук начинает разговор");
+            ChoiseColor(Game.player.Room);
+            WriteLine("Перед вами сундук.");
+            SetDefaultColor();
 
-            Chest chest = new Chest();
+            Chest chest = new Chest(Game);
 
             Activity();
 
         }
         public void TrapRoom()
         {
+            ChoiseColor(Game.player.Room);
+            WriteLine("О нет, ловушка...");
+            SetDefaultColor();
+
             Random random = new Random();
 
             int number = random.Next(10, 40);
 
-            WriteLine("О нет, ловушка...");
             WriteLine($"Вы поранились на {number}HP");
 
             Game.player.HP -= number;
@@ -148,7 +154,9 @@ namespace PLUS_game
         }
         public void StoreRoom()
         {
+            ChoiseColor(Game.player.Room);
             WriteLine("Усатый торговец медленно подползает к вам, возможно пора освободить место");
+            SetDefaultColor();
 
             Activity();
 
@@ -180,7 +188,9 @@ namespace PLUS_game
         }
         public void BossRoom()
         {
+            ChoiseColor(Game.player.Room);
             WriteLine("Чудовище преграждает вам дорогу");
+            SetDefaultColor();
 
             Monster monster = new Monster("BOSS");
 

@@ -38,7 +38,6 @@ namespace PLUS_game
                 new Weapon("Меч", 10),
                 new Weapon("Лук", 20),
                 new Weapon("Арбалет", 40),
-                new Weapon("Автомат", 1000),
                 new Weapon("Заточка", 1),
             };
             // * -----
