@@ -13,8 +13,7 @@ namespace PLUS_game
         {
             Game = game;
             Random random = new();
-            // int number = random.Next(1, 7);
-            int number = 3;
+            int number = random.Next(1, 7);
 
             bool result;
 

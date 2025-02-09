@@ -149,6 +149,11 @@ namespace PLUS_game
 
             Game.player.HP -= number;
 
+            if (Game.player.isNullHP())
+            {
+                Game.isGame = false;
+            }
+
             Activity();
 
         }

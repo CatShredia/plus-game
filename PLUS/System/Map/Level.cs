@@ -37,9 +37,9 @@ namespace PLUS_game
             LevelStr = new string[LevelSize, LevelSize];
             CountOfRoom = Game.CoefOfGame * Game.CoefOfGame;
 
-            // TODO: восстановить
-            RandomOfRoom = [1,0,2,0,0,1];
-            // SetRandomOfRooms();
+            // Установка для проверки
+            // RandomOfRoom = [1,0,0,0,2,1];
+            SetRandomOfRooms();
             for (int i = 0; i < LevelSize; i++)
             {
                 for (int j = 0; j < LevelSize; j++)

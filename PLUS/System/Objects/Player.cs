@@ -96,7 +96,7 @@ namespace PLUS_game
         {
             for (int i = 0; i < Inventory.Length; i++)
             {
-                if (Inventory[i].Name == "Пустой карман")
+                if (Inventory[i].Name == null)
                 {
                     return i;
                 }
