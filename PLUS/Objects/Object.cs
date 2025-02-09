@@ -5,8 +5,6 @@ namespace PLUS_game
 
     abstract class Object
     {
-        public int CoefOfGame = 2;
-
         public static ConsoleColor defaultForeground = ConsoleColor.Gray;
         public static ConsoleColor defaultBackground = ConsoleColor.Black;
 

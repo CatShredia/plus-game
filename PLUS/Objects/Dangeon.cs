@@ -5,6 +5,7 @@ namespace PLUS_game
 
     class Dangeon : Object
     {
+        private Game Game;
         public string[,] Level;
 
         public int[] LevelSize;
@@ -21,13 +22,13 @@ namespace PLUS_game
 
         public static bool isNewLevel = false;
 
-        public Dangeon()
+        public Dangeon(Game game)
         {
-
+            Game = game;
         }
         public void GenerateLevel()
         {
-            LevelSize = [CoefOfGame, CoefOfGame];
+            LevelSize = [Game.CoefOfGame, Game.CoefOfGame];
             Level = new string[LevelSize[0], LevelSize[1]];
 
             Game.player.Location = [0, 0];
@@ -76,13 +77,14 @@ namespace PLUS_game
             }
         }
 
-        public void SetPlayer(Player player)
+        // устанавливаем текущее местоположение и предыдущее местоположение
+        public void SetPlayer()
         {
-            Level[player.Location[0], player.Location[1]] = "[/]";
+            Level[Game.player.Location[0], Game.player.Location[1]] = "[/]";
 
-            if (!((player.Location[0] == 0) && (player.Location[1] == 0)))
+            if (!((Game.player.Location[0] == 0) && (Game.player.Location[1] == 0)))
             {
-                Level[player.LastLocation[0], player.LastLocation[1]] = $"[.]";
+                Level[Game.player.LastLocation[0], Game.player.LastLocation[1]] = $"[.]";
             }
         }
 
@@ -157,9 +159,9 @@ namespace PLUS_game
             WriteLine("Стартовая комната.");
             SetDefaultColor();
 
-            for (int i = 0; i < Game.weaponsCollection.Count; i++)
+            for (int i = 0; i < Game.gameWeaponsCollection.Count; i++)
             {
-                WriteLine($"{i + 1}: {Game.weaponsCollection[i].Name} наносит {Game.weaponsCollection[i].Damage} урона");
+                WriteLine($"{i + 1}: {Game.gameWeaponsCollection[i].Name} наносит {Game.gameWeaponsCollection[i].Damage} урона");
             }
 
             int number;
@@ -167,10 +169,10 @@ namespace PLUS_game
             {
                 number = ReadIntFromPlayer("порядковый номер оружия") - 1;
 
-                if (number >= 0 && number < Game.weaponsCollection.Count)
+                if (number >= 0 && number < Game.gameWeaponsCollection.Count)
                 {
-                    PrintWithColor($"Выбран {Game.weaponsCollection[number].Name}", ConsoleColor.Black, ConsoleColor.DarkBlue);
-                    Game.player.weapons.Add(Game.weaponsCollection[number]);
+                    PrintWithColor($"Выбран {Game.gameWeaponsCollection[number].Name}", ConsoleColor.Black, ConsoleColor.DarkBlue);
+                    Game.player.weapons.Add(Game.gameWeaponsCollection[number]);
                 }
                 else
                 {
@@ -231,7 +233,7 @@ namespace PLUS_game
                 {
                     if (Game.player.Wallet < 10)
                     {
-                        PrintWithColor("Денег нет, на покупку зелья!",ConsoleColor.Black, ConsoleColor.Green);
+                        PrintWithColor("Денег нет, на покупку зелья!", ConsoleColor.Black, ConsoleColor.Green);
                     }
                     else
                     {
@@ -261,10 +263,10 @@ namespace PLUS_game
 
         public void ToNewLevel()
         {
-            CoefOfGame += 1;
+            Game.CoefOfGame += 1;
             isNewLevel = true;
 
-            LevelSize = [CoefOfGame, CoefOfGame];
+            LevelSize = [Game.CoefOfGame, Game.CoefOfGame];
             Level = new string[LevelSize[0], LevelSize[1]];
 
             Game.LevelNumber++;
