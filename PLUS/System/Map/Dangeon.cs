@@ -191,16 +191,16 @@ namespace PLUS_game
 
         public void ToNewLevel()
         {
-            Game.CoefOfGame += 1;
-            Game.isNewLevel = true;
+            // Game.CoefOfGame += 1;
+            // Game.isNewLevel = true;
 
-            Level.LevelSize = [Game.CoefOfGame, Game.CoefOfGame];
-            Level.LevelStr = new string[Level.LevelSize[0], Level.LevelSize[1]];
+            // Level.LevelSize = [Game.CoefOfGame, Game.CoefOfGame];
+            // Level.LevelStr = new string[Level.LevelSize[0], Level.LevelSize[1]];
 
-            Game.LevelNumber++;
+            // Game.LevelNumber++;
 
-            PrintWithColor($"Переход на {Game.LevelNumber} этаж", ConsoleColor.Black, ConsoleColor.White);
-            SetDefaultColor();
+            // PrintWithColor($"Переход на {Game.LevelNumber} этаж", ConsoleColor.Black, ConsoleColor.White);
+            // SetDefaultColor();
 
         }
     }

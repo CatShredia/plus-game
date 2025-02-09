@@ -25,7 +25,7 @@ namespace PLUS_game
         // основная логика игры, где находится рабочий цикл игры
         public Game()
         {
-            Clear();
+            // Clear();
 
             // * -----
             PrintWithColor("Добро пожаловать в PLUS\n", ConsoleColor.Black, ConsoleColor.DarkBlue);

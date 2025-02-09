@@ -41,10 +41,10 @@ namespace PLUS_game
         {
             LastLocation[0] = Location[0];
             LastLocation[1] = Location[1];
-            if (Location[1] < Game.dangeon.Level.LevelSize[0])
+            if (Location[1] < Game.dangeon.Level.LevelSize)
             {
                 Location[1]++;
-                if (Game.dangeon.Level.LevelSize[0] == Location[1])
+                if (Game.dangeon.Level.LevelSize == Location[1])
                 {
                     Location[1] = 0;
                     Location[0]++;
