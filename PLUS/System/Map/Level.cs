@@ -22,9 +22,13 @@ namespace PLUS_game
         public int[] RandomOfRoom = [0, 0, 0, 0, 0, 0];
         public int CountOfRoom;
 
+        public Random random;
+
         public Level(Game game)
         {
             Game = game;
+
+            random = new Random();
         }
 
         public void GenerateLevel()
@@ -38,36 +42,41 @@ namespace PLUS_game
             CountOfRoom = Game.CoefOfGame * Game.CoefOfGame;
             SetRandomOfRooms();
 
-            for(int i = 0; i < LevelSize; i++) {
-                for(int j = 0; j < LevelSize; j++) {
-                    WriteLine($"i: {i}/ j: {j}");
+            for (int i = 0; i < LevelSize; i++)
+            {
+                for (int j = 0; j < LevelSize; j++)
+                {
+                    // WriteLine($"i: {i}/ j: {j}");
 
-                    LevelStr[i,j] = $"[{GetRandomOfRoom(i,j)}]";
+                    LevelStr[i, j] = $"[{GetRandomOfRoom(i, j)}]";
                 }
             }
 
-            WriteLine();
         }
-        public char GetRandomOfRoom(int i, int j) {
+        public char GetRandomOfRoom(int i, int j)
+        {
+            while (true)
+            {
+                if (i == 0 && j == 0 && Game.LevelNumber == 1)
+                {
+                    RandomOfRoom[0]--;
+                    return TypeOfRoom[0];
+                }
+                if (i == LevelSize - 1 && j == LevelSize - 1)
+                {
+                    RandomOfRoom[RandomOfRoom.Length - 1]--;
+                    return TypeOfRoom[RandomOfRoom.Length - 1];
+                }
 
-            if(i == 0 && j == 0) {
-                RandomOfRoom[0]--;
-                return TypeOfRoom[0];
-            }
-            if(i == LevelSize - 1 && j == LevelSize - 1) {
-                RandomOfRoom[RandomOfRoom.Length - 1]--;
-                return TypeOfRoom[RandomOfRoom.Length - 1];
+                int number = random.Next(1, RandomOfRoom.Length - 1);
+
+                if (RandomOfRoom[number] != 0)
+                {
+                    RandomOfRoom[number]--;
+                    return TypeOfRoom[number];
+                }
             }
 
-            Random random = new Random();
-            int number = random.Next(1, RandomOfRoom.Length - 1);
-
-            if(RandomOfRoom[number] != 0) {
-                RandomOfRoom[number]--;
-                return TypeOfRoom[number];
-            } else {
-                return GetRandomOfRoom(i,j);
-            }
         }
         public void SetRandomOfRooms()
         {
@@ -76,7 +85,14 @@ namespace PLUS_game
                 // ! room - [/Start room]
                 if (i == 0)
                 {
-                    RandomOfRoom[i] = 1; // 1
+                    if (Game.LevelNumber == 1)
+                    {
+                        RandomOfRoom[i] = 1; // 1
+                    }
+                    else
+                    {
+                        RandomOfRoom[i] = 0;
+                    }
                 }
                 else if (i == 1)
                 {

@@ -3,8 +3,9 @@
 @Author: Aleksandr Evimov
 
 @---Dev version---@
-0.0.1 structure
-0.0.2 alpha version
+0.0.1   structure
+0.0.2   alpha version
+0.0.2.3 new generation system
 
 / - player or start room
 E - enemy - 1 * 2

@@ -16,7 +16,7 @@ namespace PLUS_game
         public static bool isGame = false;
         public static bool isNewLevel;
         public int CoefOfGame = 2;
-        
+
         public static Player player;
         public static Dangeon dangeon;
         public static List<Weapon> gameWeaponsCollection;
@@ -50,12 +50,17 @@ namespace PLUS_game
 
                 dangeon.Level.SetPlayer();
                 dangeon.Level.WriteLevel();
-                
+
                 Write("Комната игрока: ");
                 ChoiseColor(player.Room);
                 WriteLine($"{player.Room}");
 
-                dangeon.Action(player.Room);
+                // TODO: восстановить
+                // dangeon.Action(player.Room);
+                if (player.Room == "[B]")
+                {
+                    dangeon.ToNewLevel();
+                }
 
                 if (isNewLevel == false)
                 {

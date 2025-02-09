@@ -37,6 +37,10 @@ namespace PLUS_game
                 }
             }
         }
+        public void SetLocation() {
+            Location = [0,0];
+            LastLocation = [0,0];
+        }
         public void Move()
         {
             LastLocation[0] = Location[0];
