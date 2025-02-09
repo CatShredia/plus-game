@@ -6,88 +6,16 @@ namespace PLUS_game
     class Dangeon : Object
     {
         private Game Game;
-        public string[,] Level;
 
-        public int[] LevelSize;
-
-        /*
-            / - player or start room
-            E - enemy
-            C - chest
-            T - trap
-            S - store
-            B - boss
-        */
-        public char[] TypeOfRoom = ['/', 'E', 'C', 'T', 'S', 'B'];
-
-        public static bool isNewLevel = false;
+        public Level Level;
 
         public Dangeon(Game game)
         {
             Game = game;
+
+            Level = new Level(Game);
         }
-        public void GenerateLevel()
-        {
-            LevelSize = [Game.CoefOfGame, Game.CoefOfGame];
-            Level = new string[LevelSize[0], LevelSize[1]];
-
-            Game.player.Location = [0, 0];
-            Game.player.LastLocation = [0, 0];
-
-            for (int i = 0; i < LevelSize[0]; i++)
-            {
-                for (int j = 0; j < LevelSize[1]; j++)
-                {
-                    Level[i, j] = $"[{GetTypeOfRoom()}]";
-                }
-            }
-
-            if (Game.LevelNumber == 1)
-            {
-                Level[0, 0] = $"[/]";
-            }
-
-            Level[LevelSize[0] - 1, LevelSize[1] - 1] = $"[B]";
-        }
-        public char GetTypeOfRoom()
-        {
-            Random random = new Random();
-
-            int number = random.Next(1, TypeOfRoom.Length - 1);
-
-            return TypeOfRoom[number];
-        }
-        public void WriteLevel()
-        {
-            PrintWithColor($"Уровень {Game.LevelNumber}", ConsoleColor.Black, ConsoleColor.DarkBlue);
-            WriteLine();
-            for (int i = 0; i < LevelSize[0]; i++)
-            {
-                for (int j = 0; j < LevelSize[1]; j++)
-                {
-                    ChoiseColor(Level[i, j]);
-                    Write(Level[i, j]);
-                    ForegroundColor = defaultForeground;
-
-                    if (j == LevelSize[0] - 1)
-                    {
-                        Write("\n");
-                    }
-                }
-            }
-        }
-
-        // устанавливаем текущее местоположение и предыдущее местоположение
-        public void SetPlayer()
-        {
-            Level[Game.player.Location[0], Game.player.Location[1]] = "[/]";
-
-            if (!((Game.player.Location[0] == 0) && (Game.player.Location[1] == 0)))
-            {
-                Level[Game.player.LastLocation[0], Game.player.LastLocation[1]] = $"[.]";
-            }
-        }
-
+        
         public void Action(string action)
         {
             WriteLine("---");
@@ -264,17 +192,16 @@ namespace PLUS_game
         public void ToNewLevel()
         {
             Game.CoefOfGame += 1;
-            isNewLevel = true;
+            Game.isNewLevel = true;
 
-            LevelSize = [Game.CoefOfGame, Game.CoefOfGame];
-            Level = new string[LevelSize[0], LevelSize[1]];
+            Level.LevelSize = [Game.CoefOfGame, Game.CoefOfGame];
+            Level.LevelStr = new string[Level.LevelSize[0], Level.LevelSize[1]];
 
             Game.LevelNumber++;
 
             PrintWithColor($"Переход на {Game.LevelNumber} этаж", ConsoleColor.Black, ConsoleColor.White);
             SetDefaultColor();
 
-            Game.dangeon.GenerateLevel();
         }
     }
 }

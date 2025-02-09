@@ -14,6 +14,7 @@ namespace PLUS_game
     {
         // ход игры
         public static bool isGame = false;
+        public static bool isNewLevel;
         public int CoefOfGame = 2;
         
         public static Player player;
@@ -31,6 +32,7 @@ namespace PLUS_game
             isGame = true;
             player = new Player(this, 100);
             dangeon = new Dangeon(this);
+
             gameWeaponsCollection = new List<Weapon>
             {
                 new Weapon("Меч", 10),
@@ -41,13 +43,13 @@ namespace PLUS_game
             };
             // * -----
             // генерим левел
-            dangeon.GenerateLevel();
+            dangeon.Level.GenerateLevel();
             while (isGame == true)
             {
-                player.Room = dangeon.Level[player.Location[0], player.Location[1]];
+                player.Room = dangeon.Level.LevelStr[player.Location[0], player.Location[1]];
 
-                dangeon.SetPlayer();
-                dangeon.WriteLevel();
+                dangeon.Level.SetPlayer();
+                dangeon.Level.WriteLevel();
                 
                 Write("Комната игрока: ");
                 ChoiseColor(player.Room);
@@ -55,13 +57,13 @@ namespace PLUS_game
 
                 dangeon.Action(player.Room);
 
-                if (Dangeon.isNewLevel == false)
+                if (isNewLevel == false)
                 {
                     player.Move();
                 }
                 else
                 {
-                    Dangeon.isNewLevel = false;
+                    isNewLevel = false;
                 }
             }
         }
