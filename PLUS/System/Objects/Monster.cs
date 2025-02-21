@@ -12,11 +12,15 @@ namespace PLUS_game
     {
         public string Name;
         public int Damage;
+        public int Cost;
 
-        public Monster(string name)
+        public Monster(string name, int cost)
         {
             Random random = new Random();
+            
             Name = name;
+            Cost = cost;
+
             if (name.Equals("BOSS"))
             {
                 HP = random.Next(100, 150);

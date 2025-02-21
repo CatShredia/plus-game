@@ -59,7 +59,6 @@ namespace PLUS_game
         public void OpenInventory()
         {
             PrintWeapons();
-            PrintWithColor($"У вас: {Game.player.Wallet} руб", ConsoleColor.Black, ConsoleColor.DarkYellow);
             PrintWithColor("Предметы", ConsoleColor.Black, ConsoleColor.DarkBlue);
             for (int i = 0; i < Inventory.Length; i++)
             {

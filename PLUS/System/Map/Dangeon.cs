@@ -59,6 +59,7 @@ namespace PLUS_game
             while (isInventory && Game.isGame)
             {
                 PrintWithColor($"У вас: {Game.player.HP}HP", ConsoleColor.Black, ConsoleColor.DarkRed);
+                PrintWithColor($"У вас: {Game.player.Wallet} руб", ConsoleColor.Black, ConsoleColor.DarkYellow);
 
                 active = ReadStringFromPlayer("любой символ (e - инвентарь)").ToLower();
 
@@ -77,7 +78,6 @@ namespace PLUS_game
                             break;
                     }
                 }
-
             }
             WriteLine("---");
         }
@@ -147,7 +147,7 @@ namespace PLUS_game
             WriteLine("Вы наткнулись на монстра.");
             SetDefaultColor();
 
-            Monster monster = new Monster("Монстр");
+            Monster monster = new Monster("Монстр", 10);
 
             Game.MonsterFight(monster);
 
@@ -227,7 +227,7 @@ namespace PLUS_game
             WriteLine("Чудовище преграждает вам дорогу");
             SetDefaultColor();
 
-            Monster monster = new Monster("BOSS");
+            Monster monster = new Monster("BOSS", 30);
 
             Game.MonsterFight(monster);
 

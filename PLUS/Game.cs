@@ -81,6 +81,10 @@ namespace PLUS_game
                 if (monster.isNullHP())
                 {
                     isFight = false;
+
+                    PrintWithColor($"С монстра выпало {monster.Cost} монет!", ConsoleColor.Black, ConsoleColor.DarkYellow);
+                    player.Wallet = player.Wallet + monster.Cost;
+
                     if (monster.Name == "BOSS")
                     {
                         dangeon.ToNewLevel();
