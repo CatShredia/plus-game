@@ -20,10 +20,11 @@ namespace PLUS_game
             C - chest
             T - trap
             S - store
+            A - Altar
             B - boss
         */
-        public char[] TypeOfRoom = ['/', 'E', 'C', 'T', 'S', 'B' ];
-        public int[] RandomOfRoom = [ 0, 0, 0, 0, 0, 0 ];
+        public char[] TypeOfRoom = ['/', 'E', 'C', 'T', 'S', 'A', 'B' ];
+        public int[] RandomOfRoom = [ 0, 0, 0, 0, 0, 0, 0 ];
         public int CountOfRoom;
         public Random random;
         public Level(Game game)
@@ -38,16 +39,16 @@ namespace PLUS_game
             CountOfRoom = Game.CoefOfGame * Game.CoefOfGame;
 
             // Установка для проверки
-            // RandomOfRoom = [1,0,0,0,2,1];
             SetRandomOfRooms();
             for (int i = 0; i < LevelSize; i++)
             {
                 for (int j = 0; j < LevelSize; j++)
                 {
-                    // WriteLine($"i: {i}/ j: {j}");
                     LevelStr[i, j] = $"[{GetRandomOfRoom(i, j)}]";
+                    // LevelStr[i, j] = $"[A]";
                 }
             }
+            // LevelStr[0,0] = $"[/]";
         }
         public char GetRandomOfRoom(int i, int j)
         {
@@ -109,16 +110,16 @@ namespace PLUS_game
                 }
                 else if (i == 5)
                 {
+                    // ! room - [Altar]
+                    RandomOfRoom[i] = (Game.LevelNumber - 1) * Game.LevelNumber - Game.LevelNumber;
+                }
+                else if (i == 6)
+                {
                     // ! room - [Boss!!!]
                     RandomOfRoom[i] = 1; 
                 }
                 CountOfRoom -= RandomOfRoom[i];
             }
-            // if(CountOfRoom > 0) {
-            //     PrintError("Не все типы комнат распределены: Level 127");
-            // } else if(CountOfRoom < 0) {
-            //     PrintError("Мистика, кол-во отрицательное: Level 127");
-            // }
         }
         public void WriteLevel()
         {

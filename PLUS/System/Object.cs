@@ -1,6 +1,6 @@
 namespace PLUS_game
 {
-
+    using System.Runtime.InteropServices;
     using static System.Console;
 
     abstract class Object
@@ -20,7 +20,7 @@ namespace PLUS_game
         {
             ForegroundColor = ConsoleColor.Black;
             BackgroundColor = ConsoleColor.Red;
-            Write($"Game error: {err}");
+            Write($"Game error:\n{err}");
 
             SetDefaultColor();
 
@@ -29,7 +29,7 @@ namespace PLUS_game
 
         public static void PrintDefeate()
         {
-            
+
             PrintWithColor("Поражание, монстр начинает заживо пожирать вас", ConsoleColor.Black, ConsoleColor.DarkRed);
             PrintWithColor("Ваша жизнь оборвалась......", ConsoleColor.Black, ConsoleColor.Green);
         }
@@ -43,12 +43,14 @@ namespace PLUS_game
                 'C' => ConsoleColor.Yellow,
                 'T' => ConsoleColor.Blue,
                 'S' => ConsoleColor.Green,
+                'A' => ConsoleColor.DarkYellow,
                 'B' => ConsoleColor.DarkRed,
                 _ => defaultForeground,
             };
         }
 
-        public static void PrintWithColor(string str, ConsoleColor foregrColor, ConsoleColor backgrColor) {
+        public static void PrintWithColor(string str, ConsoleColor foregrColor, ConsoleColor backgrColor)
+        {
             ForegroundColor = foregrColor;
             BackgroundColor = backgrColor;
             Write(str);
@@ -67,7 +69,7 @@ namespace PLUS_game
             }
             catch (Exception e)
             {
-                PrintError("Возникло исключение при вводе числа, необходимо число " + e.Message);
+                PrintError("Возникло исключение при вводе числа, необходимо число \n" + e.Message);
 
                 return ReadIntFromPlayer(name);
             }
@@ -84,9 +86,29 @@ namespace PLUS_game
             }
             catch (Exception e)
             {
-                PrintError("Возникло исключение при вводе строки " + e.Message);
+                PrintError("Возникло исключение при вводе строки \n" + e.Message);
 
                 return ReadStringFromPlayer(name);
+            }
+        }
+
+        public bool ConfirmActionFromUser(string action)
+        {
+            WriteLine("Вы согласны " + action + "?");
+
+            string strUser;
+            while (true)
+            {
+                strUser = ReadStringFromPlayer("y/n");
+
+                if (strUser.Equals("y"))
+                {
+                    return true;
+                }
+                else if (strUser.Equals("n"))
+                {
+                    return false;
+                }
             }
         }
     }

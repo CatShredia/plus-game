@@ -36,6 +36,9 @@ namespace PLUS_game
                 case 'S':
                     StoreRoom();
                     break;
+                case 'A':
+                    Altar();
+                    break;
                 case 'B':
                     BossRoom();
                     break;
@@ -77,6 +80,33 @@ namespace PLUS_game
 
             }
             WriteLine("---");
+        }
+
+        public void Altar()
+        {
+            ChoiseColor(Game.player.Room);
+            WriteLine("Алтарь. Поменять 40 HP на 20 урона оружия");
+            SetDefaultColor();
+
+            if (ConfirmActionFromUser("использовать алтарь"))
+            {
+                Game.player.HP -= 40;
+                int number = ReadIntFromPlayer("порядковый номер оружия");
+                try
+                {
+                    if (number > 0 || number < 3)
+                    {
+                        Game.player.weapons[number - 1].Damage = Game.player.weapons[number - 1].Damage + 20;
+                        Game.player.HP = Game.player.HP - 40;
+                    }
+                }
+                catch (Exception e)
+                {
+                    PrintError("Проблема с Алтарем: 102\n" + e);
+                }
+            }
+
+            Activity();
         }
 
         public void StartRoom()
@@ -168,9 +198,9 @@ namespace PLUS_game
             int number = Game.player.CheckPlaceToItem();
             if (number != -1)
             {
-                string str = ReadStringFromPlayer("\'Не хотите ли вы купить зелье за 10 руб? (yes/no)\'");
+                string str = ReadStringFromPlayer("\'Не хотите ли вы купить зелье за 10 руб? (y/n)\'");
 
-                if (str.Equals("yes"))
+                if (str.Equals("y"))
                 {
                     if (Game.player.Wallet < 10)
                     {

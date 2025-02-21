@@ -25,7 +25,7 @@ namespace PLUS_game
         // основная логика игры, где находится рабочий цикл игры
         public Game()
         {
-            Clear();
+            // Clear();
 
             // * -----
             PrintWithColor("Добро пожаловать в PLUS\n", ConsoleColor.Black, ConsoleColor.DarkBlue);
@@ -54,7 +54,6 @@ namespace PLUS_game
                 ChoiseColor(player.Room);
                 WriteLine($"{player.Room}");
 
-                dangeon.Action(player.Room);
                 if (player.Room == "[B]")
                 {
                     dangeon.ToNewLevel();
@@ -63,6 +62,7 @@ namespace PLUS_game
                 if (isNewLevel == false)
                 {
                     player.Move();
+                    dangeon.Action(player.Room);
                 }
                 else
                 {

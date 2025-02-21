@@ -65,8 +65,15 @@ namespace PLUS_game
             {
                 if (Inventory[i].Name != null)
                 {
-                    WriteLine($"{i + 1}: {Inventory[i].Name} восстановит: {Inventory[i].Effect}HP ");
-                } else {
+                    if (Inventory[i].Effect > 0)
+                    {
+                        PrintWithColor($"{i + 1}: {Inventory[i].Name} восстановит: {Inventory[i].Effect}HP ", ConsoleColor.Green, ConsoleColor.Black);
+                    } else {
+                        PrintWithColor($"{i + 1}: {Inventory[i].Name} снимет: {Inventory[i].Effect}HP ", ConsoleColor.Red, ConsoleColor.Black);
+                    }
+                }
+                else
+                {
                     WriteLine($"{i + 1}: Пустой Слот ");
                 }
 
