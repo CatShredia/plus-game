@@ -48,7 +48,7 @@ namespace PLUS_game
 
                 player.Room = dangeon.Level.LevelStr[player.Location[0], player.Location[1]];
 
-                dangeon.Level.SetPlayer();
+                // dangeon.Level.SetPlayer();
                 dangeon.Level.WriteLevel();
 
                 Write("Комната игрока: ");

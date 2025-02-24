@@ -23,8 +23,8 @@ namespace PLUS_game
             A - Altar
             B - boss
         */
-        public char[] TypeOfRoom = ['/', 'E', 'C', 'T', 'S', 'A', 'B' ];
-        public int[] RandomOfRoom = [ 0, 0, 0, 0, 0, 0, 0 ];
+        public char[] TypeOfRoom = ['/', 'E', 'C', 'T', 'S', 'A', 'B'];
+        public int[] RandomOfRoom = [0, 0, 0, 0, 0, 0, 0];
         public int CountOfRoom;
         public Random random;
         public Level(Game game)
@@ -32,95 +32,56 @@ namespace PLUS_game
             Game = game;
             random = new Random();
         }
+
         public void GenerateLevel()
         {
             LevelSize = Game.CoefOfGame;
             LevelStr = new string[LevelSize, LevelSize];
             CountOfRoom = Game.CoefOfGame * Game.CoefOfGame;
 
-            // Установка для проверки
-            SetRandomOfRooms();
+            // Инициализация уровня пустыми комнатами
             for (int i = 0; i < LevelSize; i++)
             {
                 for (int j = 0; j < LevelSize; j++)
                 {
-                    LevelStr[i, j] = $"[{GetRandomOfRoom(i, j)}]";
-                    // LevelStr[i, j] = $"[A]";
+                    LevelStr[i, j] = "[.]";
                 }
             }
-            // LevelStr[0,0] = $"[/]";
-        }
-        public char GetRandomOfRoom(int i, int j)
-        {
-            while (true)
+
+            // Начальная позиция
+            int x = LevelSize / 2;
+            int y = LevelSize / 2;
+
+            // Количество шагов
+            int steps = LevelSize * LevelSize * 2;
+
+            for (int i = 0; i < steps; i++)
             {
-                if (i == 0 && j == 0 && Game.LevelNumber == 1)
+                // Случайное направление
+                int direction = random.Next(0, 4);
+                switch (direction)
                 {
-                    RandomOfRoom[0]--;
-                    return TypeOfRoom[0];
+                    case 0: x = Math.Max(0, x - 1); break; // Влево
+                    case 1: x = Math.Min(LevelSize - 1, x + 1); break; // Вправо
+                    case 2: y = Math.Max(0, y - 1); break; // Вверх
+                    case 3: y = Math.Min(LevelSize - 1, y + 1); break; // Вниз
                 }
-                if (i == LevelSize - 1 && j == LevelSize - 1)
-                {
-                    RandomOfRoom[RandomOfRoom.Length - 1]--;
-                    return TypeOfRoom[RandomOfRoom.Length - 1];
-                }
-                int number = random.Next(1, RandomOfRoom.Length - 1);
-                if (RandomOfRoom[number] != 0)
-                {
-                    RandomOfRoom[number]--;
-                    return TypeOfRoom[number];
-                }
+
+                // Устанавливаем комнату
+                LevelStr[x, y] = $"[{GetRandomRoomType()}]";
             }
+
+            // Устанавливаем стартовую комнату и комнату босса
+            LevelStr[0, 0] = "[/]";
+            LevelStr[LevelSize - 1, LevelSize - 1] = "[B]";
         }
-        public void SetRandomOfRooms()
+
+        private char GetRandomRoomType()
         {
-            for (int i = 0; i < RandomOfRoom.Length; i++)
-            {
-                // ! room - [/Start room]
-                if (i == 0)
-                {
-                    if (Game.LevelNumber == 1)
-                    {
-                        RandomOfRoom[i] = 1; 
-                    }
-                    else
-                    {
-                        RandomOfRoom[i] = 0;
-                    }
-                }
-                else if (i == 1)
-                {
-                    // ! room - [Enemy]
-                    RandomOfRoom[i] = Game.LevelNumber * Game.LevelNumber; 
-                }
-                else if (i == 2)
-                {
-                    // ! room - [Chest]
-                    RandomOfRoom[i] = (Game.LevelNumber - 1) * Game.LevelNumber; 
-                }
-                else if (i == 3)
-                {
-                    // ! room - [Trap]
-                    RandomOfRoom[i] = (Game.LevelNumber - 1) * Game.LevelNumber - Game.LevelNumber;
-                }
-                else if (i == 4)
-                {
-                    // ! room - [Store / Shop]
-                    RandomOfRoom[i] = Game.LevelNumber * Game.LevelNumber;
-                }
-                else if (i == 5)
-                {
-                    // ! room - [Altar]
-                    RandomOfRoom[i] = (Game.LevelNumber - 1) * Game.LevelNumber - Game.LevelNumber;
-                }
-                else if (i == 6)
-                {
-                    // ! room - [Boss!!!]
-                    RandomOfRoom[i] = 1; 
-                }
-                CountOfRoom -= RandomOfRoom[i];
-            }
+            char[] roomTypes = ['E', 'C', 'T', 'S', 'A'];
+            return roomTypes[random.Next(roomTypes.Length)];
         }
+
         public void WriteLevel()
         {
             PrintWithColor($"Уровень {Game.LevelNumber}", ConsoleColor.Black, ConsoleColor.DarkBlue);
