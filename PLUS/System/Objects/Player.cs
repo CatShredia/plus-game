@@ -58,8 +58,9 @@ namespace PLUS_game
         }
         public void OpenInventory()
         {
+            PrintWithColor("=== ИНВЕНТАРЬ ===", ConsoleColor.Black, ConsoleColor.DarkBlue);
             PrintWeapons();
-            PrintWithColor("Предметы", ConsoleColor.Black, ConsoleColor.DarkBlue);
+            PrintWithColor("=== ПРЕДМЕТЫ ===", ConsoleColor.Black, ConsoleColor.DarkBlue);
             for (int i = 0; i < Inventory.Length; i++)
             {
                 if (Inventory[i].Name != null)
@@ -67,7 +68,9 @@ namespace PLUS_game
                     if (Inventory[i].Effect > 0)
                     {
                         PrintWithColor($"{i + 1}: {Inventory[i].Name} восстановит: {Inventory[i].Effect}HP ", ConsoleColor.Green, ConsoleColor.Black);
-                    } else {
+                    }
+                    else
+                    {
                         PrintWithColor($"{i + 1}: {Inventory[i].Name} снимет: {Inventory[i].Effect}HP ", ConsoleColor.Red, ConsoleColor.Black);
                     }
                 }
@@ -75,21 +78,13 @@ namespace PLUS_game
                 {
                     WriteLine($"{i + 1}: Пустой Слот ");
                 }
-
             }
             int number = ReadIntFromPlayer("порядковый номер, для выхода - 0") - 1;
-            if (number != -1)
+            if (number != -1 && number < Inventory.Length && Inventory[number].Name != null)
             {
                 if (HP < maxHP)
                 {
-                    if (HP + Inventory[number].Effect >= maxHP)
-                    {
-                        HP = maxHP;
-                    }
-                    else
-                    {
-                        HP += Inventory[number].Effect;
-                    }
+                    HP = Math.Min(maxHP, HP + Inventory[number].Effect);
                     Inventory[number] = new Item(null, null, 0);
                 }
                 else
@@ -98,6 +93,7 @@ namespace PLUS_game
                 }
             }
         }
+        
         public int CheckPlaceToItem()
         {
             for (int i = 0; i < Inventory.Length; i++)

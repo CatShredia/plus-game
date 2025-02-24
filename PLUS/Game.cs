@@ -25,7 +25,6 @@ namespace PLUS_game
         // основная логика игры, где находится рабочий цикл игры
         public Game()
         {
-            // Clear();
 
             // * -----
             PrintWithColor("Добро пожаловать в PLUS\n", ConsoleColor.Black, ConsoleColor.DarkBlue);
@@ -45,6 +44,8 @@ namespace PLUS_game
             dangeon.Level.GenerateLevel();
             while (isGame == true)
             {
+                Clear();
+
                 player.Room = dangeon.Level.LevelStr[player.Location[0], player.Location[1]];
 
                 dangeon.Level.SetPlayer();
@@ -54,11 +55,6 @@ namespace PLUS_game
                 ChoiseColor(player.Room);
                 WriteLine($"{player.Room}");
 
-                if (player.Room == "[B]")
-                {
-                    dangeon.ToNewLevel();
-                }
-
                 if (isNewLevel == false)
                 {
                     player.Move();
@@ -67,38 +63,64 @@ namespace PLUS_game
                 else
                 {
                     isNewLevel = false;
-                }
-            }
-        }
-        public static void MonsterFight(Monster monster)
-        {
-            bool isFight = true;
-            while (isFight)
-            {
-                PrintWithColor($"У вас: {player.HP}HP", ConsoleColor.Black, ConsoleColor.DarkRed);
-                PrintWithColor($"У противника {monster.HP}HP", ConsoleColor.Black, ConsoleColor.DarkCyan);
-                monster.HP -= player.Attack(); // удар игрока
-                if (monster.isNullHP())
-                {
-                    isFight = false;
 
-                    PrintWithColor($"С монстра выпало {monster.Cost} монет!", ConsoleColor.Black, ConsoleColor.DarkYellow);
-                    player.Wallet = player.Wallet + monster.Cost;
-
-                    if (monster.Name == "BOSS")
+                    if (player.Room == "[B]")
                     {
                         dangeon.ToNewLevel();
                     }
                 }
-                else
+            }
+        }
+        public void MonsterFight(Monster monster)
+        {
+            bool isFight = true;
+            while (isFight)
+            {
+                DisplayCombatStatus(monster);
+                isFight = PerformPlayerAttack(monster);
+                if (isFight)
                 {
-                    player.HP -= monster.Attack(); // удар монстра
+                    isFight = PerformMonsterAttack(monster);
                 }
-                if (player.isNullHP())
-                {
-                    isFight = false;
-                    isGame = false;
-                }
+            }
+        }
+
+        private void DisplayCombatStatus(Monster monster)
+        {
+            PrintWithColor($"У вас: {player.HP}HP", ConsoleColor.Black, ConsoleColor.DarkRed);
+            PrintWithColor($"У противника {monster.HP}HP", ConsoleColor.Black, ConsoleColor.DarkCyan);
+        }
+
+        private bool PerformPlayerAttack(Monster monster)
+        {
+            monster.HP -= player.Attack();
+            if (monster.isNullHP())
+            {
+                HandleMonsterDefeat(monster);
+                return false;
+            }
+            return true;
+        }
+
+        private bool PerformMonsterAttack(Monster monster)
+        {
+            player.HP -= monster.Attack();
+            if (player.isNullHP())
+            {
+                isGame = false;
+                return false;
+            }
+            return true;
+        }
+
+        private void HandleMonsterDefeat(Monster monster)
+        {
+            PrintWithColor($"С монстра выпало {monster.Cost} монет!", ConsoleColor.Black, ConsoleColor.DarkYellow);
+            player.Wallet += monster.Cost;
+
+            if (monster.Name == "BOSS")
+            {
+                dangeon.ToNewLevel();
             }
         }
     }
